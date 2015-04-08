@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Madison-Washington Hall</title>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    
+	<script src="../../dependencies/jquery-1.9.1.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="../../dependencies/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../dependencies/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../dependencies/bootstrap/css/jumbotron-narrow.css"/>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+	<script type="text/javascript">
+		
+		//On document load, theSVG is adjusted so that it is not tiny. Height must be uniquely adjusted for all buildings.	
+				//**NOTE** 	When developing new plans, go to Chrome, inspect #theSVG and take note of the proper height that's set automatically. 
+				//			Use that here.
+		$(document).ready(function(e) {
+			var isSafari = /constructor/i.test(window.HTMLElement);	 // Safari detector		
+			if(isSafari) {
+				$('#theSVG').css('height','574px');	
+			}
+        });
+	
+		//launch function runs whenever "View Custom Roomplans" is clicked.
+		//Currently does two things
+			// 1)	firefox bug fix (custom room is blank on load, this runs the launch function in the custRoom file which fixes things up)
+			// 2)	When the window width is less than 560 (mobile browser, small tablet, etc) the custRoom app is launched in a new window
+		
+		var launch = function() {	
+			//1-----------------------------------------------------------------------------------------
+				var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox detector
+				if(isFirefox) {
+					document.getElementsByClassName('custRoom')[0].contentWindow.launch();
+				}
+			//2-----------------------------------------------------------------------------------------
+				if(window.innerWidth < 560) { 
+					window.open('../parkCustRoom.html?app,1,', 'Custom Room App',  'width=555, height=400')
+				} 
+		}
+    </script>
+
+    <style type="text/css">
+    
+    
+    </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">Madison-Washington Hall </a> <!--building name | complex name-->
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                  <li class="active"><a href="#" onclick="location='../ParkPortal.html'">Return to map</a></li>
+                  <li><a href="#" onclick="window.print(document.theSVG)">Print</a></li>
+                   <li><a href="#" data-toggle="collapse" data-target="#parkCust" onclick="launch()">View Custom Roomplans</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </div>
+      
+      <!--floor selection-->
+        <ol class="breadcrumb" style="text-align:center;margin:8px auto;padding: 8px 10px;">
+          <li>Floor Selection:</li>
+          <li><button type="button" class="btn btn-sm btn-danger" id="F1">1</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger" id="F2">2</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger" id="F3">3</button></li>
+        </ol>
+      <!--floor selection-->
+            
+      <div id="parkCust" class="collapse">
+           <iframe class="custRoom" name="parkCust" src="../parkCustRoom.html?app,0," scrolling="0" frameborder="0"></iframe>
+		</div>
+
+
+      <div class="jumbotron"> <!-- SVG map container-->
+      		<object data="MadisonWash.svg" type="image/svg+xml" width="100%" id="theSVG"></object>
+      </div><!--end jumbotron-->
+
+    <script src="../../dependencies/Master.js"></script>
+    
+    <script src="../../dependencies/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

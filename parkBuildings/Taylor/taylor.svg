@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 450 316.5" xml:space="preserve">
+<style type="text/css">
+	.active{
+		fill-opacity:.5;
+		transition: .25s linear;
+		-moz-transition: .25s linear; 
+		-webkit-transition:.25s linear;
+		cursor:auto;
+	}
+	
+	.active:hover{
+		fill-opacity:1;
+		cursor:pointer;
+	}
+	
+	.floor1 {
+		display:block;
+	}
+	
+	.floor2, .floor3, .floor4, .floor5, .floor6 {
+		display:none;	
+	}
+	
+	.texts	 {
+		transition: .5s linear;
+		-moz-transition: .5s linear; 
+		-webkit-transition:.5s linear;
+		fill-opacity:1.0; 
+		font-weight:bold;		
+		pointer-events:none;
+	}
+</style>
+<script type="text/javascript">
+
+
+		//zoom function for the top left quadrant
+		function zoomTarget1() {
+			var svgDocument = document.getElementsByTagName('svg')[0];   
+			var cx = 10;
+			var cy = 170;
+			var width = 250;
+			svgDocument.setAttribute("viewBox", cx+" "+cy+" "+width+" 150.5");
+			var reShow = svgDocument.getElementById("misc");
+			
+			showReturnButton(cx,cy, width, reShow);
+		}
+		
+		
+		//zoom function for the bottom right quadrant
+		function zoomTarget2() {
+			var svgDocument = document.getElementsByTagName('svg')[0];    
+			var cx = 195;
+			var cy = 20;   
+			var width = 250;
+			svgDocument.setAttribute("viewBox", cx+" "+cy+" "+width+" 280");
+			var reShow = svgDocument.getElementById("misc");
+			showReturnButton(cx,cy,width, reShow); 	
+		}
+		
+		
+		function showReturnButton(cx, cy, width, reShow) {
+			var svgDocument = document.getElementsByTagName('svg')[0];
+			var exitButton = svgDocument.getElementById('exitButton');
+			exitButton.setAttribute("display","block");
+			exitButton.setAttribute("transform","translate("+(cx+width-25)+","+cy+")");
+			reShow.setAttribute("display","none");
+			
+			exitButton.addEventListener("click",
+				function() {
+					svgDocument.setAttribute("viewBox", "0 0 450 316.5");
+					exitButton.setAttribute("display","none");
+					reShow.setAttribute("display","block");
+				}, 
+			false);
+			
+		}
+</script>	
+
+<g id="map">
+	<g class="floor1">
+		<use xlink:href="floorOutline.svg#map1"></use>	<!--the "use" tag externally references a pre-defined symbol in the floor1.svg file with the id "map1"-->
+	</g>
+	<g class="floor2">
+		<use xlink:href="floorOutline.svg#map2"></use>	<!--same for floor2, however, since floor3 and 4 are identical to floor2 it is repeated as the same-->
+	</g>
+	<g class="floor3">
+		<use xlink:href="floorOutline.svg#map2"></use>	
+	</g>
+	<g class="floor4">
+		<use xlink:href="floorOutline.svg#map2"></use>
+	</g>
+</g>
+	
+	<g id="exitButton" display="none" style="cursor:pointer;">
+	
+		<path transform="scale(.5)" fill="#FFFFFF" d="M46.51,24.832c0,12.052-9.723,21.822-21.716,21.822c-11.993,0-21.716-9.771-21.716-21.822
+			C3.078,12.78,12.8,3.01,24.793,3.01C36.787,3.01,46.51,12.78,46.51,24.832z"/>
+		<path transform="scale(.5)" fill="#BE202E" d="M24.986,49.887C11.209,49.887,0,38.678,0,24.899C0,11.122,11.209-0.087,24.986-0.087
+			c13.778,0,24.987,11.209,24.987,24.987C49.975,38.678,38.766,49.887,24.986,49.887z M24.986,5.053
+			C14.043,5.053,5.14,13.957,5.14,24.9s8.903,19.847,19.846,19.847c10.944,0,19.847-8.903,19.847-19.847
+			C44.833,13.957,35.932,5.053,24.986,5.053z M36.301,17.221c-0.972-1.428-2.208-2.664-3.635-3.635l-7.68,7.679l-7.678-7.679
+			c-1.428,0.972-2.663,2.207-3.635,3.635l7.679,7.678l-7.679,7.679c0.972,1.428,2.207,2.663,3.635,3.636l7.678-7.679l7.68,7.679
+			c1.427-0.973,2.663-2.208,3.635-3.636l-7.678-7.679L36.301,17.221z"/>
+	</g>
+<g id="misc">
+	<g id="Key">
+	</g>
+</g>
+<g id="body">
+	<g id="colours">
+		<g id="rooms">
+			<g id="Singles">
+				<g class="floor1">
+					<use xlink:href="floorOutline.svg#sing1" class="active"> </use>
+					<use xlink:href="floorOutline.svg#sing1text" class="texts"> </use>
+				</g>
+				<g class="floor2">
+					<use xlink:href="floorOutline.svg#sing2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#sing2text" class="texts"> </use>
+				</g>
+				<g class="floor3">
+					<use xlink:href="floorOutline.svg#sing2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#sing3text" class="texts"> </use>
+				</g>
+				<g class="floor4">
+					<use xlink:href="floorOutline.svg#sing2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#sing4text" class="texts"> </use>
+				</g>
+			</g>
+			<g id="Doubles">
+				<g class="floor1">
+					<use xlink:href="floorOutline.svg#dub1" class="active"> </use>
+					<use xlink:href="floorOutline.svg#dub1text" class="texts"> </use>
+				</g>
+				<g class="floor2">
+					<use xlink:href="floorOutline.svg#dub2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#dub2text" class="texts"> </use>
+				</g>
+				<g class="floor3">
+					<use xlink:href="floorOutline.svg#dub2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#dub3text" class="texts"> </use>
+				</g>		
+				<g class="floor4">
+					<use xlink:href="floorOutline.svg#dub2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#dub4text" class="texts"> </use>
+				</g>			
+			</g>
+		</g>
+		<g id="Lounges" class="active">
+			<g class="floor1">
+					<use xlink:href="floorOutline.svg#lounge1" class="active"> </use>
+					<use xlink:href="floorOutline.svg#lounge1text" class="texts"> </use>
+			</g>
+			<g class="floor2">
+					<use xlink:href="floorOutline.svg#lounge2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#lounge2text" class="texts"> </use>
+			</g>
+			<g class="floor3">
+					<use xlink:href="floorOutline.svg#lounge2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#lounge3text" class="texts"> </use>
+			</g>
+			<g class="floor4">
+					<use xlink:href="floorOutline.svg#lounge2" class="active"> </use>
+					<use xlink:href="floorOutline.svg#lounge4text" class="texts"> </use>
+			</g>
+		</g>
+		<g id="Utility" class="active">
+			<g class="floor1">
+				<use xlink:href="floorOutline.svg#other1" class="active"> </use>
+				<use xlink:href="floorOutline.svg#other1text" class="texts"> </use>
+			</g>
+			<g class="floor2">
+				<use xlink:href="floorOutline.svg#other2" class="active"> </use>
+			</g>
+			<g class="floor3">
+				<use xlink:href="floorOutline.svg#other2" class="active"> </use>
+			</g>
+			<g class="floor4">
+				<use xlink:href="floorOutline.svg#other2" class="active"> </use>
+			</g>
+		</g>
+	</g>
+</g>
+
+
+</svg>

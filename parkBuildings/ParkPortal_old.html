@@ -1,0 +1,760 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="viewport" content="width=device-width">
+
+    <title>Presidents Park Portal</title>
+
+    <script src="../dependencies/jquery-1.9.1.js" type="text/javascript"></script>
+
+    <script src="../dependencies/raphael.js" type="text/javascript"></script>
+
+    <script src="../dependencies/scale.raphael.js" type="text/javascript"></script>
+
+
+
+    <style type="text/css">
+
+        html {
+
+            background-color: #fff;
+
+        }
+
+
+
+        #container {
+
+            width: 100%;
+
+        }
+
+
+
+
+
+    </style>
+
+</head>
+
+
+
+
+
+<body>
+
+<div id="container">
+
+    x...
+
+</div>
+
+<script type="text/javascript">
+
+var paper = new ScaleRaphael("container", 700, 1000);
+
+
+
+function resizePaper() {
+
+    var win = $(this);
+
+    paper.changeSize(win.width(), win.height(), true, false);
+
+}
+
+resizePaper();
+
+$(window).resize(resizePaper);
+
+
+
+/*
+
+ var paper = Raphael(0,0,1000,900);
+
+ */
+
+
+
+var buttons = paper.set();
+
+var HallText = paper.set();
+
+var sharedButtons = paper.set();
+
+
+
+
+
+var title = paper.text(100, 50, "Presidents Park Portal").attr('text-anchor', 'start');
+
+title.attr('font', 'Arial');
+
+title.attr('font-size', '50');
+
+
+
+///////////ADAMS
+
+var btnAdams = paper.path(["M101.25 -25.7L91.1 -35.85 94.2 -53 103.55 -52.25 110.6 -94.3 105.85 -95.05 109.05 -113.7 70.05 -119.95 60.75 -65.45 66.95 -65.45 65.45 -55.25 57.65 -48.3 28.8 -42.85 28.8 -47.5 0 -42.85 5.4 -4.65 26.45 -7.8 28 0 66.95 -7.8 63.85 -21.85 80.2 -26.55 91.9 -15.6z"]).attr('class', 'addTransition');
+
+btnAdams.transform("m1,0,0,-1,580,290");
+
+btnAdams.scale(0.5, 0.5, 0, 0);
+
+btnAdams.textName = AdamsText = paper.text(5, 150, "Adams"); //textName instance created to reference in other functions such as bolderFunction
+
+AdamsText.pArent = btnAdams; //create parent reference value, a capitalized to keep js from confusing with any functions
+
+
+
+
+
+HallText.push(AdamsText);
+
+buttons.push(btnAdams);
+
+btnAdams.link = "Adams/Adams.html";
+
+btnAdams.node.onclick = function () {
+
+    location = btnAdams.link;
+
+};
+
+AdamsText.node.onclick = function () {
+
+    location = btnAdams.link;
+
+};
+
+
+
+///////////EISENHOWER
+
+var btnEisenhower = paper.path(["M144.15 -33.55L146.45 -30.4 162.8 -46 160.5 -48.35 169 -56.9 151.9 -73.25 143.35 -65.5 118.45 -90.4 97.35 -70.2 83.3 -84.15 83.3 -121.6 33.5 -121.6 33.5 -116.85 29.6 -116.85 29.6 -123.15 15.55 -123.15 15.55 -112.25 17.9 -111.4 17.9 -107.5 0 -107.5 0 -73.25 21 -73.25 21 -67.8 58.45 -67.8 76.35 -49.95 68.5 -42.1 95.75 -14.85 91.9 -11.75 103.6 0 112.15 -9.35 119.2 -3.15 133.95 -17.95 131.65 -21.15z"]).attr('class', 'addTransition');
+
+btnEisenhower.transform("m-1,0,0,1,580,500r180");
+
+btnEisenhower.scale(0.6, 0.6, 0, 0);
+
+btnEisenhower.textName = EisenhowerText = paper.text(5, 200, "Eisenhower");
+
+EisenhowerText.pArent = btnEisenhower;
+
+
+
+HallText.push(EisenhowerText);
+
+buttons.push(btnEisenhower);
+
+btnEisenhower.link = "Eisenhower/PresParkEisenhower.html";
+
+EisenhowerText.node.onclick = function () {
+
+    location = btnEisenhower.link;
+
+};
+
+btnEisenhower.node.onclick = function () {
+
+    location = btnEisenhower.link;
+
+};
+
+
+
+////////////HARRISONWILSON
+
+var btnHarrisonWilson = paper.path(["M197 -54.55L195.45 -49.15 212.65 -43.65 232.05 -98.2 215.75 -104.4 219.6 -114.55 207.2 -118.45 203.25 -108.3 158.15 -125.5 151.85 -109.1 127.75 -117.65 113.75 -80.25 100.45 -85.7 92.7 -63.9 45.9 -80.25 38.95 -60.05 28.05 -63.9 30.4 -70.95 14.75 -76.35 0 -35.85 15.6 -30.4 10.1 -15.65 22.6 -10.95 25.65 -19.55 66.2 -3.15 71.7 -18.75 81.8 -14.1 78.65 -7.05 98.9 0 115.25 -42.1 129.3 -36.6 138.6 -60.05 183 -43.65 188.45 -57.65z"]).attr('class', 'addTransition');
+
+btnHarrisonWilson.transform("m1,0,0,-1,310,320");
+
+btnHarrisonWilson.scale(0.45, 0.45, 0, 0);
+
+btnHarrisonWilson.textName = HarrisonWilsonText = paper.text(5, 250, "Harrison - Wilson");
+
+
+
+HarrisonWilsonText.pArent = btnHarrisonWilson;
+
+
+
+HallText.push(HarrisonWilsonText);
+
+buttons.push(btnHarrisonWilson);
+
+btnHarrisonWilson.link = "Harrison%20Wilson/HarrisonWils.html";
+
+HarrisonWilsonText.node.onclick = function () {
+
+    location = btnHarrisonWilson.link;
+
+};
+
+btnHarrisonWilson.node.onclick = function () {
+
+    location = btnHarrisonWilson.link;
+
+};
+
+
+
+
+
+///////////////JACKSON
+
+var btnJackson = paper.path(["M98.95 -45.1L107.5 -50.6 78.65 -92.65 70.15 -86.4 32.7 -140.95 3.9 -120.7 7.8 -114.45 0 -109.75 28.85 -67.7 32.7 -70.05 35.05 -66.15 38.2 -68.45 45.2 -57.55 40.5 -55.2 78.65 0 113.75 -24.1z"]).attr('class', 'addTransition');
+
+btnJackson.transform("m1,0,0,-1,530,430");
+
+btnJackson.scale(0.5, 0.5, 0, 0);
+
+btnJackson.textName = JacksonText = paper.text(5, 300, "Jackson");
+
+JacksonText.pArent = btnJackson;
+
+
+
+HallText.push(JacksonText);
+
+
+
+buttons.push(btnJackson);
+
+btnJackson.link = "Jackson/Jackson.html";
+
+btnJackson.node.onclick = function () {
+
+    location = btnJackson.link;
+
+};
+
+JacksonText.node.onclick = function () {
+
+    location = btnJackson.link;
+
+};
+
+
+
+/////////////MONROE JEFFERSON
+
+var btnJeffersonMonroe = paper.path(["M92.65 -15.55L107.45 -10.1 112.15 -21.8 104.35 -24.95 119.9 -65.4 105.9 -71.65 109.85 -81.8 116.75 -78.65 123.8 -98.9 82.55 -115.25 88.05 -129.3 64.6 -138.6 81.75 -183.05 67.75 -188.4 70.85 -197.8 76.25 -195.45 82.55 -212.65 28 -232.9 21.75 -216.45 11.65 -220.4 6.95 -208.7 17.1 -204.05 0 -159.65 16.35 -153.4 6.95 -129.3 43.55 -113.7 38.9 -101.2 59.9 -92.7 43.55 -46.75 63 -38.9 59.2 -28 52.15 -30.35 46.7 -15.55 86.45 0z"]).attr('class', 'addTransition');
+
+btnJeffersonMonroe.transform("m1,0,0,-1,315,180");
+
+btnJeffersonMonroe.scale(0.45, 0.45, 0, 0);
+
+btnJeffersonMonroe.textName = JeffersonMonroeText = paper.text(5, 350, "Monroe - Jefferson");
+
+JeffersonMonroeText.pArent = btnJeffersonMonroe;
+
+
+
+HallText.push(JeffersonMonroeText);
+
+
+
+buttons.push(btnJeffersonMonroe);
+
+btnJeffersonMonroe.link = "Monroe%20Jefferson/MonroeJeff.html"
+
+btnJeffersonMonroe.node.onclick = function () {
+
+    location = btnJeffersonMonroe.link;
+
+};
+
+JeffersonMonroeText.node.onclick = function () {
+
+    location = btnJeffersonMonroe.link;
+
+};
+
+
+
+////////////KENNEDY
+
+var btnKennedy = paper.path(["M49.1 -27.3L59.25 -25.75 69.35 -70.95 59.25 -72.5 74.05 -136.35 39.75 -143.35 39 -137.1 29.65 -139.45 18.75 -90.4 22.65 -88.85 21.8 -84.95 27.3 -83.4 25 -71.7 14.05 -74.05 0 -10.15 42.85 0z"]).attr('class', 'addTransition');
+
+btnKennedy.transform("m1,0,0,-1,570,345");
+
+btnKennedy.scale(0.5, 0.5, 0, 0);
+
+btnKennedy.textName = KennedyText = paper.text(5, 400, "Kennedy");
+
+KennedyText.pArent = btnKennedy;
+
+
+
+HallText.push(KennedyText);
+
+
+
+buttons.push(btnKennedy);
+
+btnKennedy.link = "Kennedy/Kennedy.html";
+
+btnKennedy.node.onclick = function () {
+
+    location = btnKennedy.link;
+
+};
+
+KennedyText.node.onclick = function () {
+
+    location = btnKennedy.link;
+
+};
+
+
+
+/////////////LINCOLN
+
+var btnLincoln = paper.path(["M97.4 0L124.7 -9.3 118.4 -29.5 123.15 -31.9 109.05 -68.5 98.15 -64.6 91.2 -80.2 99.7 -92.6 88 -100.45 79.5 -88.75 62.35 -88.75 62.35 -98.9 19.5 -98.9 19.5 -93.4 0 -93.4 0 -54.45 55.35 -54.45 55.35 -60.7 65.45 -60.7 75.55 -53.75 84.95 -26.45 88 -28z"]).attr('class', 'addTransition');
+
+btnLincoln.transform("m1,0,0,-1,510,520");
+
+btnLincoln.scale(0.5, 0.5, 0, 0);
+
+btnLincoln.textName = LincolnText = paper.text(5, 450, "Lincoln");
+
+LincolnText.pArent = btnLincoln;
+
+
+
+HallText.push(LincolnText);
+
+
+
+buttons.push(btnLincoln);
+
+btnLincoln.link = "Lincoln/Lincoln.html";
+
+btnLincoln.node.onclick = function () {
+
+    location = btnLincoln.link;
+
+};
+
+LincolnText.node.onclick = function () {
+
+    location = btnLincoln.link;
+
+};
+
+
+
+//////////////MADISON WASHINGTON
+
+var btnMadisonWashington = paper.path(["M197.8 -54.5L195.45 -49.8 212.65 -44.35 232.1 -98.1 215.7 -104.35 219.6 -114.4 207.2 -119.15 203.25 -109 158.1 -125.35 151.85 -109 127.7 -117.55 113.65 -80.15 100.45 -85.65 92.65 -63.75 46.7 -80.15 38.9 -59.85 28.05 -63.75 30.3 -70.05 15.55 -75.5 0 -35.05 16.3 -30.3 10.85 -14.75 22.6 -10.05 25.7 -18.65 66.15 -3.05 72.4 -17.8 82.5 -13.95 79.45 -6.9 99.7 0 115.2 -42.05 130.05 -36.55 139.4 -59.85 183.85 -44.35 188.45 -57.6z"]).attr('class', 'addTransition');
+
+btnMadisonWashington.transform("m1,0,0,-1,420,190");
+
+btnMadisonWashington.scale(0.45, 0.45, 0, 0);
+
+btnMadisonWashington.textName = MadisonWashingtonText = paper.text(5, 500, "Madison - Washington");
+
+MadisonWashingtonText.pArent = btnMadisonWashington;
+
+
+
+HallText.push(MadisonWashingtonText);
+
+
+
+buttons.push(btnMadisonWashington);
+
+btnMadisonWashington.link = "Madison%20Washington/MadisonWash.html";
+
+btnMadisonWashington.node.onclick = function () {
+
+    location = btnMadisonWashington.link;
+
+};
+
+MadisonWashingtonText.node.onclick = function () {
+
+    location = btnMadisonWashington.link;
+
+};
+
+//////////////////ROOSEVELT
+
+var btnRoosevelt = paper.path(["M139.45 -44.4L111.4 -44.4 111.4 -50.6 64.65 -50.6 64.65 -43.65 0 -43.65 0 -9.35 7.05 -9.35 7.05 0 56.85 0 56.85 -4.7 61.6 -4.7 61.6 -9.35 73.2 -9.35 73.2 -2.3 139.45 -2.3z"]).attr('class', 'addTransition');
+
+btnRoosevelt.transform("m1,0,0,-1,440,500");
+
+btnRoosevelt.scale(0.5, 0.5, 0, 0);
+
+btnRoosevelt.textName = RooseveltText = paper.text(5, 550, "Roosevelt");
+
+RooseveltText.pArent = btnRoosevelt;
+
+
+
+HallText.push(RooseveltText);
+
+
+
+buttons.push(btnRoosevelt);
+
+btnRoosevelt.link = "Roosevelt/Roosevelt.html"
+
+btnRoosevelt.node.onclick = function () {
+
+    location = btnRoosevelt.link;
+
+};
+
+RooseveltText.node.onclick = function () {
+
+    location = btnRoosevelt.link;
+
+};
+
+
+
+///////////////TRUMAN
+
+var btnTruman = paper.path(["M84.9 -34.3L142.55 -63.9 126.95 -94.3 120.75 -91.15 116.8 -99.75 71.7 -77.15 74 -72.5 70.1 -70.95 72.45 -65.45 61.5 -60.85 58.45 -67.05 0 -37.45 18.7 0 43.6 -13.3 46.75 -7.05 88 -28.1z"]).attr('class', 'addTransition');
+
+btnTruman.transform("m1,0,0,-1,500,290");
+
+btnTruman.scale(0.5, 0.5, 0, 0);
+
+btnTruman.textName = TrumanText = paper.text(5, 600, "Truman");
+
+TrumanText.pArent = btnTruman;
+
+
+
+HallText.push(TrumanText);
+
+
+
+buttons.push(btnTruman);
+
+btnTruman.link = "Truman/Truman.html";
+
+btnTruman.node.onclick = function () {
+
+    location = btnTruman.link;
+
+};
+
+TrumanText.node.onclick = function () {
+
+    location = btnTruman.link;
+
+};
+
+
+
+//////////////////TAYLOR
+
+var btnTaylor = paper.path(["M29.354 805.888L143.758 805.888 143.758 710.03 470.756 710.03 470.756 698.312 581.063 698.312 581.063 689.181 605.696 689.181 605.696 754.29 688.271 754.29 688.271 740.5 1019.164 740.5 1019.164 662.187 1007.359 662.187 1007.359 312.5 1239.323 312.5 1239.323 675.698 1267.797 675.698 1267.797 819.371 1233.352 819.371 1233.352 923.164 1156.125 923.164 1156.125 965.461 701.184 965.461 701.184 982.329 605.699 982.329 605.699 1026.933 537.433 1026.933 537.433 1059.926 396.117 1059.926 396.117 1029.746 29.354 1029.746z"]).attr('class', 'addTransition');
+
+
+btnTaylor.transform("m1,0,0,1,520,560");
+
+btnTaylor.scale(0.08, 0.08, 0, 0);
+
+btnTaylor.textName = TaylorText = paper.text(5, 650, "Taylor");
+
+TaylorText.pArent = btnTaylor;
+
+
+
+HallText.push(TaylorText);
+
+buttons.push(btnTaylor);
+btnTaylor.link = "Taylor/taylor.html";
+btnTaylor.node.onclick = function () {
+    location = btnTaylor.link;
+};
+TaylorText.node.onclick = function () {
+    location = btnTaylor.link;
+};
+
+
+
+
+
+////////////////HallText properties//////////////////////
+
+
+
+HallText.attr('text-anchor', 'start');
+
+HallText.attr('class', 'HallText');
+
+HallText.attr('font', 'Arial');
+
+HallText.attr('font-weight', '200');
+
+HallText.attr('font-size', '24');
+
+HallText.attr('fill', 'blue');
+
+HallText.attr('cursor', 'pointer');
+
+
+
+
+
+////////////////////////TEXT HOVER PROPERTIES
+
+HallText.hover(
+
+        function () {
+
+            //this.gl = this.pArent.glow({color: "#FFF", width: 40, opacity:0.9});
+
+            this.pArent.attr('fill', 'gold'); //this.pArent selects the building
+
+            this.attr('fill', 'black');
+
+            this.Box.attr('fill', 'gold');
+
+            this.Box.attr('fill-opacity', '1');
+
+        },
+
+        function () {
+
+            //this.gl.remove();
+
+            this.pArent.attr('fill', '#063');
+
+            this.attr('fill', 'blue');
+
+            this.Box.attr('fill', '#FFF');
+
+            this.Box.attr('fill-opacity', '.5');
+
+        }
+
+);
+
+
+
+////////////////Cursor change, glow effects////////////////////
+
+
+
+buttons.attr('cursor', 'pointer');
+
+sharedButtons.attr('cursor', 'pointer');
+
+
+
+
+
+var glowFunction = function (makeGlow) {
+
+    makeGlow.hover(
+
+            function () {
+
+                this.g = this.glow({color: "#FFF", width: 40, opacity: 0.9});
+
+                this.attr('fill', '#0a5');
+
+            },
+
+            function () {
+
+                this.g.remove();
+
+                this.attr('fill', '#063');
+
+            }
+
+    );
+
+};
+
+
+
+glowFunction(buttons);
+
+
+
+buttons.attr("fill", "#063");
+
+
+
+/////////////////////////TEXT BOX PROPERTIES
+
+
+
+var makeBox = function (hallText, btn) {
+
+    var textBox = hallText.getBBox();
+
+    var wIdth = textBox.width * 1.25; //multiplied by 1.25 to give padding
+
+    var hEight = textBox.height * 1.25;
+
+    var xVal = textBox.x; //subtracting from original width value to center the box over the text.
+
+    var yVal = textBox.y - (hEight * .125);
+
+    hallText.Box = paper.rect(xVal, yVal, /*wIdth*/261, hEight)
+
+            .attr('fill', '#FFF')
+
+            .attr('fill-opacity', '.5')
+
+            .attr('class', 'addTransition')
+
+            .attr('class', 'Box');
+
+    hallText.toFront();
+
+
+
+    hallText.Box.mouseover(
+
+            function () {
+
+                this.attr('fill', 'gold');
+
+                this.attr('fill-opacity', '1');
+
+                this.attr('cursor', 'pointer');
+
+                btn.attr('fill', 'gold');
+
+            }
+
+    );
+
+    hallText.Box.mouseout(
+
+            function () {
+
+                this.attr('fill', '#FFF');
+
+                this.attr('fill-opacity', '0.5');
+
+                this.attr('cursor', 'auto');
+
+                btn.attr('fill', '#063');
+
+            }
+
+    );
+
+
+
+    hallText.Box.mousedown(
+
+            function () {
+
+                if (hallText.pArent.link != null) {
+
+                    location = hallText.pArent.link;
+
+                } else {
+
+                    alert("Taylor hall is currently under construction")
+
+                }
+
+            }
+
+    );
+
+};
+
+
+
+
+
+HallText.forEach(
+
+        function (node) {
+
+            makeBox(node, node.pArent);
+
+        }
+
+);
+
+
+
+/////////////////TEXTBOX BACKGROUND FULL OPACITY ON HOVER
+
+var boxColorFunction = function (btn) {
+
+    var btnBox = btn.textName.Box; //selects the box
+
+    btn.hover(
+
+            function () {
+
+                btnBox.attr('fill', 'gold');
+
+                btnBox.attr('fill-opacity', '1');
+
+            },
+
+            function () {
+
+                btnBox.attr('fill', '#FFF');
+
+                btnBox.attr('fill-opacity', '.5');
+
+            }
+
+    );
+
+};
+
+
+
+buttons.forEach(
+
+        function (node) {
+
+            boxColorFunction(node);
+
+        }
+
+);
+
+/*
+
+ paper.text(0,690,"Presidents Park is a traditional-style freshmen housing area located on Patriot Circle near").attr('text-anchor','start').attr('font-size','20');;
+
+ paper.text(0,712,"Shenandoah River Lane. In the center of the complex is Eisenhower Hall, which supports the ").attr('text-anchor','start').attr('font-size','20');;
+
+ paper.text(0,734,"community with a study lounge, TV lounge with vending machines for snacks and DVDs, 24-hour").attr('text-anchor','start').attr('font-size','20');;
+
+ paper.text(0,756,"service desk, and professional staff offices. Eisenhower Hall also includes Ike’s Diner, ").attr('text-anchor','start').attr('font-size','20');;
+
+ paper.text(0,778,"individual study rooms, and a tiered seminar room.").attr('text-anchor','start').attr('font-size','20');;
+
+ */
+
+</script>
+
+
+
+
+
+</body>
+
+</html>
+

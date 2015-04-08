@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+
+
+
+<html>
+
+<head>
+
+    <title>Customize Park Rooms</title>
+
+    <meta name="viewport" content="width=device-height"> <!--viewport important as it will fit the svg app in mobile screens. -->
+
+    <style type="text/css">
+
+
+        #wrapper {
+
+            width:550px;
+			font-family:Arial, Helvetica, sans-serif; 
+
+        }
+
+        body {
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+
+
+        #container {
+
+            margin:0 auto;
+
+        }
+
+
+
+        #buttons {
+
+            text-align: center;
+
+            clear:both;
+
+            margin-top:280px;
+
+        }
+
+
+
+    </style>
+
+    <script src="../dependencies/jquery-1.9.1.js"></script>
+
+</head>
+
+
+
+<body style="overflow:hidden;"> <!--overflow:hidden very important, hides ugly scrollbars-->
+
+
+
+<div id="wrapper"> <div id="buttons">
+
+
+
+        <div id="hiddenButtons" style="display: block;">
+
+            <button id="1">
+
+                Single
+
+            </button>
+
+            <button id="2">
+
+                Double
+
+            </button>
+
+            <button id="3">
+
+                Triple
+
+            </button>
+
+            <button id="4">
+
+                Quad
+
+            </button>
+
+            <br>
+
+
+        </div>
+
+            <button id="6" onclick="launch();">
+
+                Reset Furniture
+
+            </button>
+        <button id="5" onclick="resetFunc();">
+
+            Reset Furniture
+
+        </button>
+        
+       
+		<button id="rotate" onclick="toggleHandles();">
+
+            Toggle Rotate Mode
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+
+<script src="../dependencies/raphael.js"></script>
+
+<script src="../dependencies/raphael.free_transform.js"></script>
+
+<script defer type="text/javascript">
+var toggle = 0;
+function toggleHandles() {
+	if(toggle ==0) {
+		for (i=0; i < freeTransform.length; i++) {
+			if (freeTransform[i].subject.node.style.display != "none") {
+				freeTransform[i].showHandles();
+				freeTransform[i].setOpts({snap: {rotate:45}});
+			}
+		};
+		toggle = 1; //handles are toggled 
+	} else {
+		for (i=0; i < freeTransform.length; i++) {
+			if (freeTransform[i].subject.node.style.display != "none") {
+				freeTransform[i].hideHandles({undrag: false});
+			}
+		};
+		toggle = 0;	
+	}
+}
+
+
+//---------paper--- main container, topmost layer, with scale function for responsive canvas
+
+
+
+var paper = new Raphael(0,0,555,280);
+
+
+
+//-------LAYERS--------------------------------
+
+var background = paper.set();		//background layer
+
+var beds = paper.set();
+
+var desks = paper.set();
+
+var wardrobes = paper.set();
+
+var dressers = paper.set();
+
+var freeTransform = [];
+
+
+
+
+//------ Room Walls (bounding box)------------
+
+var boundBox = paper.path("M581.3,277.6l58.9,39.4l-2.9,4.3h5.2v5.5h-0.1v12.5H92.5V60.7h549.9v180.6h0.1v9h-5.2c-0.5,0-1,0-1.5,0.1c-2.5,0.1-5,0.3-7.5,0.6c-0.7,0.1-1.4,0.2-2.1,0.3c-0.2,0-0.4,0-0.5,0c-1,0.2-2,0.4-3,0.6c-0.6,0.1-1.2,0.3-1.8,0.4c-13,2.9-24.3,9.3-34.1,19.1c-0.9,0.9-1.7,1.9-2.6,2.8C583.3,275.2,582.3,276.4,581.3,277.6z M637.4,250.3V65.8H97.6v268.4h539.7v-12.9l-58.9-39.4l2.9-4.3");
+
+boundBox.transform("t-90,-60");
+
+
+
+background.push(boundBox);
+
+background.attr('stroke', 'black');
+
+background.attr('stroke-width', '2');
+
+background.attr('fill', 'white');
+
+
+
+//Singles
+
+var singSet = new paper.set();
+
+//Doubles
+
+var dubSet = new paper.set();
+
+//Triples
+
+var triSet = new paper.set();
+
+//Quads
+
+var quadSet = new paper.set();
+
+
+var bed = paper.image("../images/bedObj.png", 0, 0, 235, 95).attr("title", "Bed").hide();
+var desk = paper.image("../images/deskObj.png", 0, 0, 130, 80).attr("title", "Desk").hide();
+var dresser = paper.image("../images/dresserObj.png", 0, 0, 56, 42).attr("title","Dresser").hide();
+var wardrobe = paper.image("../images/wardrobeObj.png", 0, 0, 65, 80).attr("title","Wardrobe").hide();
+
+var quadBed = paper.image("../images/bedObj.png", 0, 0, 140, 60).hide();
+var quadDesks = paper.image("../images/deskObj.png", 0, 0, 80, 50).hide();
+var quadDresser = paper.image("../images/dresserObj.png", 0, 0, 30, 30).attr("title","Dresser").hide();
+var quadWardrobe = paper.image("../images/wardrobeObj.png", 0, 0, 37, 80).attr("title","Wardrobe").hide();
+
+var objCount = 0;	//unique id for each item
+var makeObject = function(obj, x,y,theta,set) {
+	var objMod = obj.clone().transform("R"+theta+"T"+x+","+y);	//make object by cloning grandparent object. Rotate by theta, translate by x,y
+
+	this.id = objCount++;										//increment & assign
+	set.push(obj);												//add object to set
+	var ft = paper.freeTransform(objMod, {scale: false, rotate: true, drag: true}).hideHandles({undrag: false});	//apply freeTransform for user friendly dragging/rotating
+	freeTransform.push(ft);		//add freeTransform object to the array of freeTransform objects; this is so the toggle rotate will work. 
+	return ft;					//return freeTransform object. To obtain obj simply call "ft.subject"
+}
+
+//////////////global variables///////////////////////
+
+var currentRoom = 0;
+
+////////////BUTTONS EVENT LISTENERS//////////////////
+
+var singleRoom = function () {
+
+    if (currentRoom != 1) {
+	
+		bed1_1 = makeObject(bed,10,8,0,singSet);
+		desk1_1 = makeObject(desk,260, 8,0, singSet);
+		dresser1_1 = makeObject(dresser,402,13,0,singSet);
+		wardrobe1_1 = makeObject(wardrobe,477,10,0,singSet);
+		
+        currentRoom = 1;
+
+    }
+
+};
+
+
+
+var doubleRoom = function () {
+
+    if (currentRoom != 2) {
+
+		bed2_1 = makeObject(bed,10,8,0,dubSet);
+		desk2_1 = makeObject(desk,260, 8,0, dubSet);
+		dresser2_1 = makeObject(dresser,402,13,0,dubSet);
+		wardrobe2_1 = makeObject(wardrobe,477,10,0,dubSet);
+		
+		bed2_2 = makeObject(bed,10,177,0,dubSet);
+		desk2_2 = makeObject(desk,260, 193,180, dubSet);
+		dresser2_2 = makeObject(dresser,402,210,0,dubSet);
+		wardrobe2_2 = makeObject(wardrobe,477,102,0,dubSet);
+
+        currentRoom = 2;
+
+    }
+
+};
+
+
+
+var tripleRoom = function () {
+
+    if (currentRoom != 3) {
+
+		bed3_1 = makeObject(bed,10,8,0,triSet);
+		desk3_1 = makeObject(desk,260, 8,0, triSet);
+		dresser3_1 = makeObject(dresser,402,13,0,triSet);
+		wardrobe3_1 = makeObject(wardrobe,477,10,0,triSet);
+		
+		bed3_2 = makeObject(bed,10,177,0,triSet);
+		bed3_2.subject.attr("opacity",".6");
+		desk3_2 = makeObject(desk,260, 190,180, triSet);
+		dresser3_2 = makeObject(dresser,402,210,0,triSet);
+		wardrobe3_2 = makeObject(wardrobe,477,102,0,triSet);
+
+		desk3_3 = makeObject(desk,21, 193,180, triSet);
+		dresser3_3 = makeObject(dresser,162,210,0,triSet);
+		bed3_3 = makeObject(bed,16,14,0,triSet); 
+		
+		bed3_2.subject.toFront(); // .toFront() used so that opaque bed is on top of desk and dresser
+		bed3_2.subject.hover(function() {
+			this.animate({"opacity":"0.4"}, 200);
+		}, function() {
+			this.animate({"opacity":"0.6"}, 200);
+		});
+		
+        currentRoom = 3;
+
+    }
+
+};
+
+
+
+var quadRoom = function () {
+
+    if (currentRoom != 4) {
+		bed4_1 = makeObject(quadBed,10,8,0,quadSet);
+		bed4_2 = makeObject(quadBed,10,211,0,quadSet);
+		bed4_3 = makeObject(quadBed,337,8,0,quadSet);
+		bed4_4 = makeObject(quadBed,337,108,0,quadSet);
+		
+		dress4_1 = makeObject(quadDresser,339,175,0,quadSet);
+		dress4_2 = makeObject(quadDresser,339,74,0,quadSet);
+		dress4_3 = makeObject(quadDresser,14,74,0,quadSet);
+		dress4_4 = makeObject(quadDresser,14,179,0,quadSet);
+		
+		desk4_1 = makeObject(quadDesks,154,9,0,quadSet);
+		desk4_2 = makeObject(quadDesks,154,222,180,quadSet);
+		desk4_3 = makeObject(quadDesks,480,24,90,quadSet);
+		desk4_4 = makeObject(quadDesks,480,114,90,quadSet);
+
+		wardrobe4_1 = makeObject(quadWardrobe,244,86,0,quadSet);
+		wardrobe4_2 = makeObject(quadWardrobe,244,7,0,quadSet);
+		wardrobe4_3 = makeObject(quadWardrobe,278,86,180,quadSet);
+		wardrobe4_4 = makeObject(quadWardrobe,278,7,180,quadSet);
+
+        currentRoom = 4;
+
+    }
+
+};
+
+
+
+// logic() serves to help the event listeners understand if the app is launched or embedded
+
+function logic(n) {
+
+    if (n && location.search.split(',')[0] == "?app") {
+
+        this.currentRoom = n;
+
+        launch();
+
+    } else if (location.search.split(',')[0] == "?currentRoom"){
+
+        resetFunc();
+
+    }
+
+}
+
+
+
+ document.getElementById('1').addEventListener('click', function() {logic(1)}, false);
+
+ document.getElementById('2').addEventListener('click', function() {logic(2)}, false);
+
+ document.getElementById('3').addEventListener('click', function() {logic(3)}, false);
+
+ document.getElementById('4').addEventListener('click', function() {logic(4)}, false);
+
+
+
+///////////////////////////////////////////////////////
+
+//reset furniture function
+
+//appends the current room type value to the URL
+//which is later parsed so that the room may be set back up
+
+function resetFunc() {
+
+ //   location.search = '?currentRoom,' + currentRoom + ',';   //appends the current room type val for after the reload
+
+                                                            //so that we may reset the furniture the user was viewing
+
+    location.search = 'app,' + currentRoom +',';
+
+}
+
+
+
+function launch() {
+
+    location.search = 'app,' + currentRoom +',';
+
+}
+
+function show() {
+	document.getElementsByTagName('html')[0].style.display = "inline";	
+}
+
+
+$(document).ready(function () { //runs when page is ready (we need to set the rooms back if the reset buttons were hit)
+
+
+
+    if (location.search != null) {                                 //if there is an added value to the url (reset button action)
+			
+		if(location.search == "") { 			 			//if there are no parameters, that means it's not displaying any room type (single double triple or quad) then hide the app
+			document.getElementsByTagName('html')[0].style.display = "none";
+			
+		}
+		
+        if (location.search.split(',')[0] == "?app") {     //if the application is recognized
+
+            $('#5').hide();                                //hide the original reset button, this way resetFunc isn't called.
+
+        }
+
+
+
+        var valCurrRoom = location.search.split(',')[1];   //get the appended value
+
+
+
+        if (valCurrRoom == 1) {                            //1 - singles, 2 - doubles, etc.
+
+            singleRoom();
+
+        } else if (valCurrRoom == 2) {
+
+            doubleRoom();
+
+        } else if (valCurrRoom == 3) {
+
+            tripleRoom();
+
+        } else if (valCurrRoom == 4) {
+
+            quadRoom();
+
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

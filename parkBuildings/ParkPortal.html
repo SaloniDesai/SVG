@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>President's Park Portal</title>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    
+	<script src="../dependencies/jquery-1.9.1.js"></script>
+    <script src="../dependencies/raphael.js" type="text/javascript"></script>
+    <script src="../dependencies/scale.raphael.js" type="text/javascript"></script>
+    
+        <link rel="stylesheet" type="text/css" href="../dependencies/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../dependencies/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../dependencies/bootstrap/css/jumbotron-narrow.css"/>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+	<script type="text/javascript">
+		
+		//On document load, theSVG is adjusted so that it is not tiny. Height must be uniquely adjusted for all buildings.	
+				//**NOTE** 	When developing new plans, go to Chrome, inspect #theSVG and take note of the proper height that's set automatically. 
+				//			Use that here.
+		$(document).ready(function(e) {
+			var isSafari = /constructor/i.test(window.HTMLElement);	 // Safari detector		
+			if(isSafari) {
+				$('#theSVG').css('height','590px');	
+			}    
+        });
+
+    </script>
+
+    <style type="text/css">
+		.breadcrumb>li {
+			display: list-item;
+			margin: 5px 0;
+		}		
+		
+		.breadcrumb>li+li:before {
+			content: "";
+		}
+		
+		
+		.jumbotron {
+			float:right;	
+			width:72%;	
+		}
+		
+		#raphaelStuff {
+			background-color:white;
+			border-radius:6px;	
+		}
+		
+		@media (max-width:500px) {
+				.breadcrumb {
+					clear:both;
+					width:180px;
+					margin: 5px auto;
+					display:block;
+				}
+				
+				.jumbotron {
+					clear:both;
+					width:100%;	
+				}
+		}
+		
+		@media (min-width: 500px) {
+				.breadcrumb {
+					float:left;	
+					width:27%;
+				}
+		}
+    
+    </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand">President's Park</a> <!--building name | complex name-->
+          </div>
+
+        </div><!--/.container-fluid --> 
+      </div> 
+      
+      <!--floor selection bar-->
+        <ol id="bldgNames" class="breadcrumb" style="text-align:center;padding: 8px 10px;">
+          <li>Select a Building:</li>
+          <li><button type="button" class="btn btn-sm btn-danger">Adams</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Eisenhower</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Harrison Wilson</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Jackson</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Monroe Jefferson</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Kennedy</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Lincoln</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Madison Washington</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Roosevelt</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Truman</button></li>
+          <li><button type="button" class="btn btn-sm btn-danger">Taylor</button></li>
+        </ol>
+      <!--end floor selection-->
+
+      <!-- SVG map container-->
+      <div class="jumbotron"> 
+      		<div id="raphaelStuff">
+            </div>
+      </div><!--end jumbotron-->
+
+   <!-- <script src="../dependencies/Master.js"></script>     -->
+	
+	<script type="text/javascript">
+        var paper = new ScaleRaphael("raphaelStuff",420,505);	//create scalable raphael object and place it in div#raphaelStuff
+		/* resizePaper(): changes the size of the canvas->'paper' to fit the parent class.jumbotron. */
+		function resizePaper() {
+			var win = $('.jumbotron');		
+			paper.changeSize(win.width(), win.height(), false, false);		//false (not centered) and false (no clipping)
+		}
+				
+		resizePaper();					//resize the paper once on load to make the fit nice 
+		$(window).resize(resizePaper);	//whenever the page resizes resizePaper is fired
+		
+    	var btnSet = paper.set();	//create a set to hold all clickable button objects
+	
+		//create object using paper.path function
+        var btnAdams = paper.path(["M101.25 -25.7L91.1 -35.85 94.2 -53 103.55 -52.25 110.6 -94.3 105.85 -95.05 109.05 -113.7 70.05 -119.95 60.75 -65.45 66.95 -65.45 65.45 -55.25 57.65 -48.3 28.8 -42.85 28.8 -47.5 0 -42.85 5.4 -4.65 26.45 -7.8 28 0 66.95 -7.8 63.85 -21.85 80.2 -26.55 91.9 -15.6z"]);
+		btnAdams.transform("m0.5,0,0,-0.5,320,120");	//resize and reposition the object
+		btnAdams.link = "Adams/Adams.html";				//bind the object to a link (the building's page)
+		btnAdams.name = "Adams"							//Create a name reference in the object, later used to help compare and link sidebar (Raphael DOM is different than HTML DOM level)
+		
+		var btnEisenhower = paper.path(["M144.15 -33.55L146.45 -30.4 162.8 -46 160.5 -48.35 169 -56.9 151.9 -73.25 143.35 -65.5 118.45 -90.4 97.35 -70.2 83.3 -84.15 83.3 -121.6 33.5 -121.6 33.5 -116.85 29.6 -116.85 29.6 -123.15 15.55 -123.15 15.55 -112.25 17.9 -111.4 17.9 -107.5 0 -107.5 0 -73.25 21 -73.25 21 -67.8 58.45 -67.8 76.35 -49.95 68.5 -42.1 95.75 -14.85 91.9 -11.75 103.6 0 112.15 -9.35 119.2 -3.15 133.95 -17.95 131.65 -21.15z"]);
+		btnEisenhower.transform("m-0.6,0,0,0.6,230,270r180");
+		btnEisenhower.link = "Eisenhower/PresParkEisenhower.html";
+		btnEisenhower.name = "Eisenhower";
+		
+		var btnHarrisonWilson = paper.path(["M197 -54.55L195.45 -49.15 212.65 -43.65 232.05 -98.2 215.75 -104.4 219.6 -114.55 207.2 -118.45 203.25 -108.3 158.15 -125.5 151.85 -109.1 127.75 -117.65 113.75 -80.25 100.45 -85.7 92.7 -63.9 45.9 -80.25 38.95 -60.05 28.05 -63.9 30.4 -70.95 14.75 -76.35 0 -35.85 15.6 -30.4 10.1 -15.65 22.6 -10.95 25.65 -19.55 66.2 -3.15 71.7 -18.75 81.8 -14.1 78.65 -7.05 98.9 0 115.25 -42.1 129.3 -36.6 138.6 -60.05 183 -43.65 188.45 -57.65z"]);
+		btnHarrisonWilson.transform("m0.45,0,0,-0.45,35,140");
+		btnHarrisonWilson.link = "Harrison%20Wilson/HarrisonWils.html";
+		btnHarrisonWilson.name = "HarrisonWilson";
+		
+		var btnJackson = paper.path(["M98.95 -45.1L107.5 -50.6 78.65 -92.65 70.15 -86.4 32.7 -140.95 3.9 -120.7 7.8 -114.45 0 -109.75 28.85 -67.7 32.7 -70.05 35.05 -66.15 38.2 -68.45 45.2 -57.55 40.5 -55.2 78.65 0 113.75 -24.1z"]);
+		btnJackson.transform("m0.5,0,0,-0.5,280,280");
+		btnJackson.link = "Jackson/Jackson.html";
+		btnJackson.name = "Jackson";
+		
+		var btnMonroeJefferson = paper.path(["M92.65 -15.55L107.45 -10.1 112.15 -21.8 104.35 -24.95 119.9 -65.4 105.9 -71.65 109.85 -81.8 116.75 -78.65 123.8 -98.9 82.55 -115.25 88.05 -129.3 64.6 -138.6 81.75 -183.05 67.75 -188.4 70.85 -197.8 76.25 -195.45 82.55 -212.65 28 -232.9 21.75 -216.45 11.65 -220.4 6.95 -208.7 17.1 -204.05 0 -159.65 16.35 -153.4 6.95 -129.3 43.55 -113.7 38.9 -101.2 59.9 -92.7 43.55 -46.75 63 -38.9 59.2 -28 52.15 -30.35 46.7 -15.55 86.45 0z"]);
+		btnMonroeJefferson.transform("m0.45,0,0,-0.45,45,10");
+		btnMonroeJefferson.link = "Monroe%20Jefferson/MonroeJeff.html"
+		btnMonroeJefferson.name = "MonroeJefferson"
+		
+		var btnKennedy = paper.path(["M49.1 -27.3L59.25 -25.75 69.35 -70.95 59.25 -72.5 74.05 -136.35 39.75 -143.35 39 -137.1 29.65 -139.45 18.75 -90.4 22.65 -88.85 21.8 -84.95 27.3 -83.4 25 -71.7 14.05 -74.05 0 -10.15 42.85 0z"]);
+		btnKennedy.transform("m0.5,0,0,-0.5,320,185");
+		btnKennedy.link = "Kennedy/Kennedy.html";
+		btnKennedy.name = "Kennedy";
+		
+		var btnLincoln = paper.path(["M97.4 0L124.7 -9.3 118.4 -29.5 123.15 -31.9 109.05 -68.5 98.15 -64.6 91.2 -80.2 99.7 -92.6 88 -100.45 79.5 -88.75 62.35 -88.75 62.35 -98.9 19.5 -98.9 19.5 -93.4 0 -93.4 0 -54.45 55.35 -54.45 55.35 -60.7 65.45 -60.7 75.55 -53.75 84.95 -26.45 88 -28z"]);
+		btnLincoln.transform("m0.5,0,0,-0.5,255,360");
+		btnLincoln.link = "Lincoln/Lincoln.html";
+		btnLincoln.name = "Lincoln";
+		
+		var btnMadisonWashington = paper.path(["M197.8 -54.5L195.45 -49.8 212.65 -44.35 232.1 -98.1 215.7 -104.35 219.6 -114.4 207.2 -119.15 203.25 -109 158.1 -125.35 151.85 -109 127.7 -117.55 113.65 -80.15 100.45 -85.65 92.65 -63.75 46.7 -80.15 38.9 -59.85 28.05 -63.75 30.3 -70.05 15.55 -75.5 0 -35.05 16.3 -30.3 10.85 -14.75 22.6 -10.05 25.7 -18.65 66.15 -3.05 72.4 -17.8 82.5 -13.95 79.45 -6.9 99.7 0 115.2 -42.05 130.05 -36.55 139.4 -59.85 183.85 -44.35 188.45 -57.6z"]);
+		btnMadisonWashington.transform("m0.45,0,0,-0.45,165,20");
+		btnMadisonWashington.link = "Madison%20Washington/MadisonWash.html";
+		btnMadisonWashington.name = "MadisonWashington";
+		
+		var btnRoosevelt = paper.path(["M139.45 -44.4L111.4 -44.4 111.4 -50.6 64.65 -50.6 64.65 -43.65 0 -43.65 0 -9.35 7.05 -9.35 7.05 0 56.85 0 56.85 -4.7 61.6 -4.7 61.6 -9.35 73.2 -9.35 73.2 -2.3 139.45 -2.3z"]);
+		btnRoosevelt.transform("m0.5,0,0,-0.5,190,350");
+		btnRoosevelt.link = "Roosevelt/Roosevelt.html";
+		btnRoosevelt.name = "Roosevelt";
+		
+		var btnTruman = paper.path(["M84.9 -34.3L142.55 -63.9 126.95 -94.3 120.75 -91.15 116.8 -99.75 71.7 -77.15 74 -72.5 70.1 -70.95 72.45 -65.45 61.5 -60.85 58.45 -67.05 0 -37.45 18.7 0 43.6 -13.3 46.75 -7.05 88 -28.1z"]);
+		btnTruman.transform("m0.5,0,0,-0.5,250,125");
+		btnTruman.link = "Truman/Truman.html";
+		btnTruman.name = "Truman";
+		
+		var btnTaylor = paper.path(["M29.354 805.888L143.758 805.888 143.758 710.03 470.756 710.03 470.756 698.312 581.063 698.312 581.063 689.181 605.696 689.181 605.696 754.29 688.271 754.29 688.271 740.5 1019.164 740.5 1019.164 662.187 1007.359 662.187 1007.359 312.5 1239.323 312.5 1239.323 675.698 1267.797 675.698 1267.797 819.371 1233.352 819.371 1233.352 923.164 1156.125 923.164 1156.125 965.461 701.184 965.461 701.184 982.329 605.699 982.329 605.699 1026.933 537.433 1026.933 537.433 1059.926 396.117 1059.926 396.117 1029.746 29.354 1029.746z"]);
+		btnTaylor.transform("m0.08,0,0,0.08,250,390");
+		btnTaylor.link = "Taylor/taylor.html";
+		btnTaylor.name = "Taylor";
+		btnTaylor.attr("stroke","green");
+		
+		
+		/*Add all objects to the set*/
+		btnSet.push(btnAdams,btnEisenhower,btnHarrisonWilson,btnJackson,btnMonroeJefferson,btnKennedy,btnLincoln,btnMadisonWashington,btnRoosevelt,btnTruman,btnTaylor);
+		btnSet.attr("cursor","pointer");
+		
+		/* this algorithm links the buttons on the left (HTML DOM level) to the buttons on the map (Raphael/SVG DOM level) */
+		for(i = 1; i < $(btnSet).length+1; i++) {			//iterate through all the items in the btnSet, i starts at 1 because in the HTML DOM sidebar the first li element isn't an actual button. +1 to the conditional so it doesn't exclude the last object
+			var targetName = $('#bldgNames li')[i].textContent;	//At the current list element of the iteration, store the textContent as targetName (i.e. "Adams") 
+			if(targetName.indexOf(" ") > -1){					//This conditional checks if there are any spaces at all. 
+				var splitArray = targetName.split(" ");		//If there are spaces, split the targetName amongst the spaces. This creates an array splitArray of which contents are the parts of the name. (i.e. "Harrison Wilson" gets split into the splitArray: ["Harrison","Wilson"]
+				targetName = "";								//empty out the reference to targetName
+				for(j = 0; j < splitArray.length; j++) {	//repopulate targetName with the parts of splitArray concatenated (i.e. targetName: "Harrison Wilson" -> splitArray:["Harrison","Wilson"] -> targetName: "" -> targetName: "HarrisonWilson")
+					targetName += splitArray[j]
+				}
+			} 
+			
+			/* At this point we have obtained the target name of the building. */
+			
+			var itr = 0;							//Initialize an iterator counter
+			var matchedObj = $(btnSet)[itr]; 		//Initialize the variable matchedObj which gets the raphael btnBuilding object reference
+			while(matchedObj.name != targetName) {	//If the matchedObj.name is not the same as the targetName, 
+				matchedObj = $(btnSet)[itr++];		//increment the iterator, which will change matchedObj to be the next item in the btnSet. Loop until matchedObj.name == targetName
+			}									
+				
+			/*  
+				Let's look at what we have.
+					| Element/Obj descrption	|		Reference				| 				Example
+					- HTML list element 		|		$('bldgNames li')[i]	|	<li><button> Adams </button></li>
+					- Raphael btn Object 		|		matchedObj				|	Raphael SVG Path object "var btnAdams ...."
+					- Targetted building name 	|		targetName				|	"Adams"
+			*/
+			
+								//.lastChild because we want to make changes not to the entire <li> list item, but the first/only child, which is a <button>
+			$('#bldgNames li')[i].lastChild.link = matchedObj.link;			//Copy the link from the Raphael Object to the HTML button
+			$('#bldgNames li')[i].btnRef = matchedObj; 		//this.btnRef becomes a reference back for the btn object. Now we can access the matchedObj, the Raphael Object, from the list element by calling: $('#bldgNames li').btnRef
+			matchedObj.listRef = $('#bldgNames li')[i]; 	//this.listRef becomes a reference for the list object. Now we can access the $('bldgNames li')[i], the HTML <li> element, from the matchedObj, by calling: btnAdams.listRef
+		}
+		
+		/* 	Now that we have successfully created a bridge for each RaphaelJS btn Object to the desired HTML <li> element, 
+			It is now time to add eventListeners that will make things happen! */
+		for(k = 1; k < $('#bldgNames li').length;k++) {		//iterate through the HTML <li> elems, again skipping one b/c there's a <li> that says "Select a building" which has no matching Raphael Object. No +1 to conditional though!
+			var listElem = $('#bldgNames li')[k];			//get listElement of the current iteration
+			listElem.addEventListener("mouseenter",				//########### UPON MOUSE ENTRANCE #############//
+				function() {												//recall: $('bldgNames li')[a] will return a <li> list element with contents <button> that we need to change. Access this by .childrens()[0]
+					this.lastChild.style.backgroundColor = 'gold';			//change <button> background color to gold
+					this.lastChild.style.color = 'black';					//change <button> text color to black 
+					$(this.btnRef)[0].attr('fill','gold');						
+				}, false									
+			);												
+			
+			listElem.addEventListener("mouseleave",				//########### UPON MOUSE LEAVE #############//
+				function() {
+					this.lastChild.style.backgroundColor = '#F15D5E';	//Reset the <button> background color
+					this.lastChild.style.color = 'white';				//Reset the <button> text color
+					$(this.btnRef)[0].attr('fill','#063');							//Reset the Raphael object fill 
+					
+				}, false
+			);
+			$('#bldgNames li')[k].lastChild.addEventListener("click",function() {location.href = this.link}, true);	//whenever the <button> is clicked, change the link to the bldg page link
+		}
+		
+		
+		btnSet.attr("fill","#063");	//initalize all buttons to be of color #063 (GMU green)
+		for (i = 0; i < $(btnSet).length; i++) { //for each Raphael obj in the btnSet
+			btnSet[i].hover(	
+				function() {									//upon mouse enter
+					this.attr("fill","gold");					//change color of Raphael obj to gold
+					this.listRef.lastChild.style.backgroundColor = 'gold';	//change color of <button> to gold
+					this.listRef.lastChild.style.color = 'black'				//change text color of <button> to black
+				},
+				function() {									//upon mouse leave reset everything
+					this.attr("fill","#063");
+					this.listRef.lastChild.style.backgroundColor = '#F15D5E';
+					this.listRef.lastChild.style.color = 'white'
+					
+				}
+			);
+			$(btnSet)[i].click(function(){location.href = this.link});		//I'm going to let you guess what this does.
+			
+		}
+    
+    </script>
+    <script src="../dependencies/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
